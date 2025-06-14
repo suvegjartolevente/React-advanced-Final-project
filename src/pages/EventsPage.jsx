@@ -32,7 +32,7 @@ export const EventsPage = () => {
           <div key={event.id} className="event">
             <h2>{event.title}</h2>
             <p>{event.description}</p>
-            <img src={event.image} alt={event.name}></img>
+            <img src={event.image} alt={event.name} ></img>
             <p>
               date: {dateOnly}
               From: {fixedStartTime} to: {fixedEndTime}
