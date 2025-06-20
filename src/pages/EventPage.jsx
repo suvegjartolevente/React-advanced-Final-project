@@ -2,9 +2,10 @@ import React from "react";
 import { Box, Heading, Image, Text } from "@chakra-ui/react";
 import { useLoaderData } from "react-router-dom";
 import { dateFormatter, timeFormatter } from "../Utils/Time&DateFormatter";
-import { useUserCategory } from "../components/UserCategoryContext";
+
 import { getUser } from "../Utils/GetUser";
 import { categoryFormatter } from "../Utils/CategoryFormatter";
+import { useUserCategory } from "../components/AppProvider";
 
 export const loader = async ({ params }) => {
   const eventsRes = await fetch(
@@ -36,8 +37,6 @@ export const EventPage = () => {
       {categoryNames && <Text>Category: {categoryNames}</Text>}
       {host && <Text>Organized by: {host.name}</Text>}
       {host && <Image src={host.image} alt={host.name} />}
-      
-
     </Box>
   );
 };

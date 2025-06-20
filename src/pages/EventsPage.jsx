@@ -1,10 +1,10 @@
 import React from "react";
 import { Box, Heading, Image, Text } from "@chakra-ui/react";
 import { Link, useLoaderData } from "react-router-dom";
-import { useUserCategory } from "../components/UserCategoryContext";
 
 import { dateFormatter, timeFormatter } from "../Utils/Time&DateFormatter";
 import { categoryFormatter } from "../Utils/CategoryFormatter";
+import { useUserCategory } from "../components/AppProvider";
 
 export const loader = async () => {
   const eventsRes = await fetch(`http://localhost:3000/events`);
