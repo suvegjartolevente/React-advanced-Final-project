@@ -1,4 +1,16 @@
-export const AddEventForm = () => {
+import {
+  Box,
+  Button,
+  FormLabel,
+  Input,
+  Select,
+  useToast,
+} from "@chakra-ui/react";
+import { useState } from "react";
+
+export const AddEventForm = ({ onSucces }) => {
+  const [error, setError] = useState("");
+  const toast = useToast();
   // const { addBook } = useLibrary();
   const submitForm = (event) => {
     event.preventDefault();
@@ -7,39 +19,60 @@ export const AddEventForm = () => {
     const image = event.target.elements.image.value;
     const startTime = event.target.elements.startTime.value;
     const endTime = event.target.elements.endTime.value;
+
     const category = event.target.elements.category.value;
     const host = event.target.elements.host.value;
+    if (endTime <= startTime) {
+      setError("End time must be after start time.");
+      return;
+    }
 
-    addEvent({ title, description, image, category, startTime, endTime,host });
+    addEvent({ title, description, image, category, startTime, endTime, host });
+    const newEvent = {
+      title,
+      description,
+      image,
+      categoryIds: [parseInt(category)],
+      startTime: startTime.toISOString(),
+      endTime: endTime.toISOString(),
+      createdBy: parseInt(host),
+    };
+    toast({
+      title: "Event added",
+      status: "succes",
+      duration: 3000,
+      isClosable: true,
+    });
+    setError("");
+    if (onSucces) onSucces();
   };
 
   return (
-    <>
-      <form onSubmit={submitForm}>
-        <label>title</label>
-        <input type="text" name="title"></input>
-        <label>description</label>
-        <input type="text" name="description"></input>
-        <label>image URL</label>
-        <input type="text" name="image" ></input>
-        <label>Start time</label>
-        <input type="datetime-local" name="startTime"></input>
-        <label>End time</label>
-        <input type="datetime-local" name="endTime"></input>
-        <label>Category</label>
-        <select name="category">
+    <Box onSubmit={submitForm}>
+      <FormLabel>Title</FormLabel>
+      <Input type="text" name="title"></Input>
+      <FormLabel>Description</FormLabel>
+      <Input type="text" name="description"></Input>
+      <FormLabel>Image URL</FormLabel>
+      <Input type="text" name="image"></Input>
+      <FormLabel>Start time</FormLabel>
+      <Input type="datetime-local" name="startTime"></Input>
+      <FormLabel>End time</FormLabel>
+      <Input type="datetime-local" name="endTime"></Input>
+      <FormLabel>Category</FormLabel>
+      <Select name="category" placeholder="select category">
         <option value="1">sports</option>
         <option value="2">games</option>
         <option value="3">relaxation</option>
-        </select>
-        <label>host</label>
-        <select name="host">
+      </Select>
+      <FormLabel>Host</FormLabel>
+      <Select name="host" placeholder="select host">
         <option value="1">Michael Turner</option>
         <option value="2">Sophia Collins</option>
-        <option value="3">Emily Carter</option></select>
+        <option value="3">Emily Carter</option>
+      </Select>
 
-        <button type="submit">Add Event</button>
-      </form>
-    </>
+      <Button type="submit">Add Event</Button>
+    </Box>
   );
 };

@@ -1,10 +1,20 @@
 import React from "react";
-import { Box, Heading, Image, Text } from "@chakra-ui/react";
+import { Box, Button, Heading, Image, Text, useDisclosure } from "@chakra-ui/react";
 import { Link, useLoaderData } from "react-router-dom";
 
 import { dateFormatter, timeFormatter } from "../Utils/Time&DateFormatter";
 import { categoryFormatter } from "../Utils/CategoryFormatter";
 import { useUserCategory } from "../components/AppProvider";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react";
+import { AddEventForm } from "../components/AddEventForm";
 
 export const loader = async () => {
   const eventsRes = await fetch(`http://localhost:3000/events`);
@@ -19,10 +29,13 @@ export const loader = async () => {
 export const EventsPage = () => {
   const { events } = useLoaderData();
   const { categories } = useUserCategory();
-
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <div className="events-list">
+    <Box className="events-list">
       <Heading>List of events</Heading>
+      <Button colorScheme="blue" my={4} onClick={onOpen}>
+  ➕ Add Event
+</Button>
 
       {events.map((event) => {
         const dateOnly = dateFormatter(event.startTime);
@@ -51,6 +64,19 @@ export const EventsPage = () => {
           </Link>
         );
       })}
-    </div>
+      <Modal  isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent size="xl">
+          <ModalHeader>Add New Event</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <AddEventForm onSuccess={onClose} />
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </Box>
   );
 };
