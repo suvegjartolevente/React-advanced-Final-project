@@ -3,8 +3,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Root } from './components/Root';
-import { EventsPage, loader as eventsPageLoader } from "./pages/EventsPage";
+import { EventsPage } from "./pages/EventsPage";
 import { EventPage, loader as eventPageLoader } from "./pages/EventPage";
+import { EventProvider } from './components/UpdateProvider';
 
 
 const router = createBrowserRouter([
@@ -15,7 +16,7 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <EventsPage />,
-         loader: eventsPageLoader,
+         
       },
       {
         path: '/event/:eventId',
@@ -30,7 +31,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ChakraProvider>
+      <EventProvider>
       <RouterProvider router={router} />
+      </EventProvider>
     </ChakraProvider>
   </React.StrictMode>,
 );

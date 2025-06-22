@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Button, Heading, Image, Text, useDisclosure } from "@chakra-ui/react";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { dateFormatter, timeFormatter } from "../Utils/Time&DateFormatter";
 import { categoryFormatter } from "../Utils/CategoryFormatter";
@@ -15,19 +15,15 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import { AddEventForm } from "../components/AddEventForm";
+import { useEvents } from "../components/UpdateProvider";
 
-export const loader = async () => {
-  const eventsRes = await fetch(`http://localhost:3000/events`);
 
-  const events = await eventsRes.json();
 
-  return {
-    events,
-  };
-};
+
+
 
 export const EventsPage = () => {
-  const { events } = useLoaderData();
+  const { events } = useEvents();
   const { categories } = useUserCategory();
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
