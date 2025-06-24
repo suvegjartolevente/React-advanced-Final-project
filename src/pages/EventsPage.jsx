@@ -1,5 +1,12 @@
-import React from "react";
-import { Box, Button, Heading, Image, Text, useDisclosure } from "@chakra-ui/react";
+import React, { useState } from "react";
+import {
+  Box,
+  Button,
+  Heading,
+  Image,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
 import { dateFormatter, timeFormatter } from "../Utils/Time&DateFormatter";
@@ -16,24 +23,25 @@ import {
 } from "@chakra-ui/react";
 import { AddEventForm } from "../components/AddEventForm";
 import { useEvents } from "../components/UpdateProvider";
-
-
-
-
-
+import { EventSearch } from "../components/EventSearch";
 
 export const EventsPage = () => {
   const { events } = useEvents();
   const { categories } = useUserCategory();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [searchField, setSearchField] = useState("");
+  const filteredEvents = events.filter((event) =>
+    event.title.toLowerCase().includes(searchField.toLowerCase())
+  );
   return (
     <Box className="events-list">
       <Heading>List of events</Heading>
+      <EventSearch searchField={searchField} onChange={(e) =>setSearchField(e.target.value)} />
       <Button colorScheme="blue" my={4} onClick={onOpen}>
-  ➕ Add Event
-</Button>
+        ➕ Add Event
+      </Button>
 
-      {events.map((event) => {
+      {filteredEvents.map((event) => {
         const dateOnly = dateFormatter(event.startTime);
         const fixedStartTime = timeFormatter(event.startTime);
         const fixedEndTime = timeFormatter(event.endTime);
@@ -60,7 +68,7 @@ export const EventsPage = () => {
           </Link>
         );
       })}
-      <Modal  isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent size="xl">
           <ModalHeader>Add New Event</ModalHeader>

@@ -7,12 +7,14 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { useEvents } from "./UpdateProvider";
 
-export const AddEventForm = ({ onSucces }) => {
+export const AddEventForm = ({ onSuccess }) => {
   const [error, setError] = useState("");
   const toast = useToast();
-  // const { addBook } = useLibrary();
-  const submitForm = (event) => {
+  const { addEvent } = useEvents();
+
+  const submitForm = async (event) => {
     event.preventDefault();
     const title = event.target.elements.title.value;
     const description = event.target.elements.description.value;
@@ -22,33 +24,38 @@ export const AddEventForm = ({ onSucces }) => {
 
     const category = event.target.elements.category.value;
     const host = event.target.elements.host.value;
+
+    const start = new Date(startTime);
+    const end = new Date(endTime);
+
     if (endTime <= startTime) {
       setError("End time must be after start time.");
       return;
     }
-
-    addEvent({ title, description, image, category, startTime, endTime, host });
     const newEvent = {
       title,
       description,
       image,
       categoryIds: [parseInt(category)],
-      startTime: startTime.toISOString(),
-      endTime: endTime.toISOString(),
+      startTime: start.toISOString(),
+      endTime: end.toISOString(),
       createdBy: parseInt(host),
     };
+
+    addEvent(newEvent);
+
     toast({
       title: "Event added",
-      status: "succes",
+      status: "success",
       duration: 3000,
       isClosable: true,
     });
     setError("");
-    if (onSucces) onSucces();
+    if (onSuccess) onSuccess();
   };
 
   return (
-    <Box onSubmit={submitForm}>
+    <Box as="form" onSubmit={submitForm}>
       <FormLabel>Title</FormLabel>
       <Input type="text" name="title"></Input>
       <FormLabel>Description</FormLabel>
