@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Heading, Image, Text } from "@chakra-ui/react";
+import { Box, Button, Heading, Image, Text } from "@chakra-ui/react";
 import { useLoaderData } from "react-router-dom";
 import { dateFormatter, timeFormatter } from "../Utils/Time&DateFormatter";
 
@@ -29,6 +29,8 @@ export const EventPage = () => {
     <Box className="event-detail">
       <Heading>{event.title}</Heading>
       <Text>{event.description}</Text>
+
+      <Button>Edit Event</Button>
       <Image src={event.image} alt={event.name} />
       <Text>
         date: {dateOnly}

@@ -158,6 +158,66 @@
       "endTime": "2025-06-15T15:55:00.000Z",
       "createdBy": 1,
       "id": 11
+    },
+    {
+      "title": "Kat show",
+      "description": "A lot of nice cats",
+      "image": "\"https://picsum.photos/600/400\"",
+      "categoryIds": [
+        3
+      ],
+      "startTime": "2025-04-11T07:55:00.000Z",
+      "endTime": "2025-06-30T07:55:00.000Z",
+      "createdBy": 3,
+      "id": 12
+    },
+    {
+      "title": "lololo",
+      "description": "fefefefefef",
+      "image": "\"https://picsum.photos/600/400\"",
+      "categoryIds": [
+        1
+      ],
+      "startTime": "2025-06-25T08:00:00.000Z",
+      "endTime": "2025-06-25T13:00:00.000Z",
+      "createdBy": 2,
+      "id": 13
+    },
+    {
+      "title": "Football",
+      "description": "Match",
+      "image": "\"https://picsum.photos/600/400\"",
+      "categoryIds": [
+        1
+      ],
+      "startTime": "2025-06-25T08:47:00.000Z",
+      "endTime": "2025-06-25T13:47:00.000Z",
+      "createdBy": 2,
+      "id": 14
+    },
+    {
+      "title": "Levi",
+      "description": "Jótéknyoság",
+      "image": "https://picsum.photos/seed/cat/800/600",
+      "categoryIds": [
+        1
+      ],
+      "startTime": "2025-06-26T18:16:00.000Z",
+      "endTime": "2025-06-28T18:17:00.000Z",
+      "createdBy": 2,
+      "id": 15
+    },
+    {
+      "title": "Pókicic",
+      "description": "Kis cica",
+      "image": "https://picsum.photos/600/400",
+      "categoryIds": [
+        2
+      ],
+      "startTime": "2025-06-18T18:27:00.000Z",
+      "endTime": "2025-07-26T18:27:00.000Z",
+      "createdBy": 2,
+      "id": 16
     }
   ],
   "categories": [
