@@ -30,18 +30,35 @@ export const EventsPage = () => {
   const { categories } = useUserCategory();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [searchField, setSearchField] = useState("");
-  const filteredEvents = events.filter((event) =>
-    event.title.toLowerCase().includes(searchField.toLowerCase())
-  );
+  const [selectedFilter, setSelectedFilter] = useState(null);
+  const handleFilterClick = (filter) =>{
+    setSelectedFilter((prevFilter) =>(prevFilter === filter ? null : filter));
+  };
+
+  const matchedEvents = events.filter((hit) =>{
+  const eventsSearch = 
+    hit.title.toLowerCase().includes(searchField.toLowerCase())
+  ;
+  const categoryFilter = selectedFilter
+  ? hit.categoryIds.includes(selectedFilter)
+  : true;
+return eventsSearch && categoryFilter;
+  });
+
   return (
     <Box className="events-list">
       <Heading>List of events</Heading>
       <EventSearch searchField={searchField} onChange={(e) =>setSearchField(e.target.value)} />
+        <Box>
+<Button onClick={() =>handleFilterClick(1) }>Sports</Button>
+<Button onClick={() =>handleFilterClick(2) }>Games</Button>
+<Button onClick={() =>handleFilterClick(3) }>Relaxation</Button>
+</Box>
       <Button colorScheme="blue" my={4} onClick={onOpen}>
         ➕ Add Event
       </Button>
-
-      {filteredEvents.map((event) => {
+{matchedEvents.length > 0 ? (
+      matchedEvents.map((event) => {
         const dateOnly = dateFormatter(event.startTime);
         const fixedStartTime = timeFormatter(event.startTime);
         const fixedEndTime = timeFormatter(event.endTime);
@@ -67,7 +84,9 @@ export const EventsPage = () => {
             </Box>
           </Link>
         );
-      })}
+      })):(<Text fontSize="lg" mt={4}>
+            No events found !
+          </Text>)}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent size="xl">

@@ -1,4 +1,4 @@
-import { Box, Input, Text } from "@chakra-ui/react";
+import {  Input } from "@chakra-ui/react";
 
 
 export const EventSearch = ({searchField,onChange}) => {
@@ -8,7 +8,7 @@ export const EventSearch = ({searchField,onChange}) => {
       <label>Search for events:</label>
       <Input
         type="text"
-        placeholder="Type to serch"
+        placeholder="Type to search"
         value={searchField}
         onChange={onChange}
       ></Input>
