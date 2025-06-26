@@ -23,6 +23,7 @@ export const EventsPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [searchField, setSearchField] = useState("");
   const [selectedFilter, setSelectedFilter] = useState(null);
+  const [eventToEdit, setEventToEdit] = useState(null);
   const handleFilterClick = (filter) => {
     setSelectedFilter((prevFilter) => (prevFilter === filter ? null : filter));
   };
@@ -49,7 +50,7 @@ export const EventsPage = () => {
         <Button onClick={() => handleFilterClick(2)}>Games</Button>
         <Button onClick={() => handleFilterClick(3)}>Relaxation</Button>
       </Box>
-      <Button colorScheme="blue" my={4} onClick={onOpen}>
+      <Button colorScheme="blue" my={4} onClick={()=>{setEventToEdit(null); onOpen();}}>
         ➕ Add Event
       </Button>
       {matchedEvents.length > 0 ? (
@@ -88,7 +89,7 @@ export const EventsPage = () => {
           No events found !
         </Text>
       )}
-      <ModalForm isOpen={isOpen} onClose={onClose} />
+      <ModalForm isOpen={isOpen} onClose={onClose} initialData={eventToEdit} />
     </Box>
   );
 };

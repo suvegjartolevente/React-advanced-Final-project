@@ -10,17 +10,30 @@ import {
   ModalOverlay,
 } from "@chakra-ui/react";
 import { AddEventForm } from "../AddEventForm";
+import { EditEventForm } from "../EditEventForm";
 
-export const ModalForm = ({ isOpen, onClose }) => {
+export const ModalForm = ({ isOpen, onClose, initialData }) => {
+  const isEditMode = !!initialData;
+
   return (
     <Box>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent size="xl">
-          <ModalHeader>Add New Event</ModalHeader>
+          <ModalHeader>
+            {isEditMode ? "Edit Event" : "Add new event"}
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <AddEventForm onSuccess={onClose} />
+            {isEditMode ? (
+              <EditEventForm
+                onSuccess={onClose}
+                initialData={initialData}
+                mode={isEditMode ? "edit" : "add"}
+              />
+            ) : (
+              <AddEventForm />
+            )}
           </ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>Cancel</Button>

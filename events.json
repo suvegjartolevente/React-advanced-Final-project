@@ -218,6 +218,30 @@
       "endTime": "2025-07-26T18:27:00.000Z",
       "createdBy": 2,
       "id": 16
+    },
+    {
+      "title": "d",
+      "description": "dww",
+      "image": "dw",
+      "categoryIds": [
+        2
+      ],
+      "startTime": "2025-05-30T07:10:00.000Z",
+      "endTime": "2025-06-28T07:10:00.000Z",
+      "createdBy": 1,
+      "id": 17
+    },
+    {
+      "title": "MaiEvent",
+      "description": "kivacsi vagyok",
+      "image": "https://picsum.photos/600/400",
+      "categoryIds": [
+        1
+      ],
+      "startTime": "2025-06-26T11:20:00.000Z",
+      "endTime": "2025-06-27T12:25:00.000Z",
+      "createdBy": 1,
+      "id": 18
     }
   ],
   "categories": [

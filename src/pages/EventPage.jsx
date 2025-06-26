@@ -1,11 +1,12 @@
-import React from "react";
-import { Box, Button, Heading, Image, Text } from "@chakra-ui/react";
+import React, { useState } from "react";
+import { Box, Button, Heading, Image, Text, useDisclosure } from "@chakra-ui/react";
 import { useLoaderData } from "react-router-dom";
 import { dateFormatter, timeFormatter } from "../Utils/Time&DateFormatter";
 
 import { getUser } from "../Utils/GetUser";
 import { categoryFormatter } from "../Utils/CategoryFormatter";
 import { useUserCategory } from "../components/AppProvider";
+import { ModalForm } from "../components/ui/ModalForm";
 
 export const loader = async ({ params }) => {
   const eventsRes = await fetch(
@@ -17,6 +18,9 @@ export const loader = async ({ params }) => {
 };
 
 export const EventPage = () => {
+  const [eventToEdit, setEventToEdit] = useState(null);
+  // const [selectedEvent, setSelectedEvent] = useState(null);
+   const { isOpen, onOpen, onClose } = useDisclosure();
   const { categories, users } = useUserCategory();
   const { event } = useLoaderData();
   const dateOnly = dateFormatter(event.startTime);
@@ -27,10 +31,13 @@ export const EventPage = () => {
   console.log("Event userId:", event.userId);
   return (
     <Box className="event-detail">
+      <ModalForm isOpen={isOpen} onClose={onClose} initialData={eventToEdit} />
       <Heading>{event.title}</Heading>
       <Text>{event.description}</Text>
 
-      <Button>Edit Event</Button>
+      <Button colorScheme="blue" my={4} onClick={()=>{setEventToEdit(event); onOpen();}}>
+              ✏️ Edit Event
+            </Button>
       <Image src={event.image} alt={event.name} />
       <Text>
         date: {dateOnly}
