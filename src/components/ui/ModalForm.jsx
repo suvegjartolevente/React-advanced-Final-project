@@ -29,7 +29,7 @@ export const ModalForm = ({ isOpen, onClose, initialData }) => {
               <EditEventForm
                 onSuccess={onClose}
                 initialData={initialData}
-                mode={isEditMode ? "edit" : "add"}
+                // mode={isEditMode ? "edit" : "add"}
               />
             ) : (
               <AddEventForm />
