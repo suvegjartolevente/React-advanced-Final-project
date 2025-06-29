@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Box, Button, Heading, Image, Text, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Heading,
+  Image,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { useLoaderData } from "react-router-dom";
 import { dateFormatter, timeFormatter } from "../Utils/Time&DateFormatter";
 
@@ -19,25 +26,41 @@ export const loader = async ({ params }) => {
 
 export const EventPage = () => {
   const [eventToEdit, setEventToEdit] = useState(null);
-   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { categories, users } = useUserCategory();
-  const { event } = useLoaderData();
-  const dateOnly = dateFormatter(event.startTime);
-  const fixedStartTime = timeFormatter(event.startTime);
-  const fixedEndTime = timeFormatter(event.endTime);
-  const categoryNames = categoryFormatter(event.categoryIds, categories);
-  const host = getUser(users, event.createdBy);
-  console.log("Event userId:", event.createdBy);
+  const { event: initialEvent } = useLoaderData();
+  const [eventData, setEventData] = useState(initialEvent);
+  const dateOnly = dateFormatter(eventData.startTime);
+  const fixedStartTime = timeFormatter(eventData.startTime);
+  const fixedEndTime = timeFormatter(eventData.endTime);
+  const categoryNames = categoryFormatter(eventData.categoryIds, categories);
+  const host = getUser(users, eventData.createdBy);
+
   return (
     <Box className="event-detail">
-      <ModalForm isOpen={isOpen} onClose={onClose} initialData={eventToEdit} />
-      <Heading>{event.title}</Heading>
-      <Text>{event.description}</Text>
+      <ModalForm
+        isOpen={isOpen}
+        initialData={eventToEdit}
+        onAfterEdit={(updatedEvent) => {
+          console.log("Updated event received in EventPage:", updatedEvent);
+          setEventData(updatedEvent);
+        }}
+        onClose={onClose}
+      />
+      <Heading>{eventData.title}</Heading>
+      <Text>{eventData.description}</Text>
 
-      <Button colorScheme="blue" my={4} onClick={()=>{setEventToEdit(event); onOpen();}}>
-              ✏️ Edit Event
-            </Button>
-      <Image src={event.image} alt={event.name} />
+      <Button
+        colorScheme="blue"
+        my={4}
+        onClick={() => {
+          setEventToEdit(eventData);
+          onOpen();
+        }}
+      >
+        ✏️ Edit Event
+      </Button>
+      <Image src={eventData.image} alt={eventData.name} />
       <Text>
         date: {dateOnly}
         From: {fixedStartTime} to: {fixedEndTime}

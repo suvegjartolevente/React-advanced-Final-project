@@ -12,7 +12,7 @@ import {
 import { AddEventForm } from "../AddEventForm";
 import { EditEventForm } from "../EditEventForm";
 
-export const ModalForm = ({ isOpen, onClose, initialData }) => {
+export const ModalForm = ({ isOpen, onClose, initialData,onAfterEdit }) => {
   const isEditMode = !!initialData;
 
   return (
@@ -29,7 +29,7 @@ export const ModalForm = ({ isOpen, onClose, initialData }) => {
               <EditEventForm
                 onSuccess={onClose}
                 initialData={initialData}
-               
+               onAfterEdit={onAfterEdit}
               />
             ) : (
               <AddEventForm onSuccess={onClose}/>

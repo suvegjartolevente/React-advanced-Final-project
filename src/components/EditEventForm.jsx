@@ -9,7 +9,7 @@ import {
 import { useState } from "react";
 import { useEvents } from "./UpdateProvider";
 
-export const EditEventForm = ({ onSuccess, initialData }) => {
+export const EditEventForm = ({ onSuccess, initialData,onAfterEdit  }) => {
   const [error, setError] = useState("");
   const toast = useToast();
   const { editEvent } = useEvents();
@@ -33,7 +33,7 @@ export const EditEventForm = ({ onSuccess, initialData }) => {
   const start = new Date(startTime);
   const end = new Date(endTime);
 
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     e.preventDefault();
     if (endTime <= startTime) {
       setError("End time must be after start time.");
@@ -53,7 +53,8 @@ export const EditEventForm = ({ onSuccess, initialData }) => {
     
    
 
-     editEvent(EditedEvent);
+     const updated = await editEvent(EditedEvent);
+     if (onAfterEdit) onAfterEdit(updated);
 
     toast({
       title: "Event edited",

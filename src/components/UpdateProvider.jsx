@@ -54,6 +54,7 @@ export const EventProvider = ({ children }) => {
     });
     const data = await res.json();
     dispatch({ type: "EDIT_EVENT", payload: data });
+    return data;
   };
 
   return (
