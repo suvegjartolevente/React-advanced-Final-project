@@ -6,14 +6,16 @@ import {
   Image,
   Text,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { dateFormatter, timeFormatter } from "../Utils/Time&DateFormatter";
 
 import { getUser } from "../Utils/GetUser";
 import { categoryFormatter } from "../Utils/CategoryFormatter";
 import { useUserCategory } from "../components/AppProvider";
 import { ModalForm } from "../components/ui/ModalForm";
+import { useEvents } from "../components/UpdateProvider";
 
 export const loader = async ({ params }) => {
   const eventsRes = await fetch(
@@ -25,6 +27,9 @@ export const loader = async ({ params }) => {
 };
 
 export const EventPage = () => {
+  const navigate = useNavigate();
+  const toast = useToast();
+  const { deleteEvent } = useEvents();
   const [eventToEdit, setEventToEdit] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { categories, users } = useUserCategory();
@@ -35,6 +40,19 @@ export const EventPage = () => {
   const fixedEndTime = timeFormatter(eventData.endTime);
   const categoryNames = categoryFormatter(eventData.categoryIds, categories);
   const host = getUser(users, eventData.createdBy);
+
+  const handleDelete = async () => {
+    if (window.confirm("Are you sure to delete this event?")) {
+      await deleteEvent(eventData.id);
+      toast({
+        title: "Event Deleted",
+        status:"info",
+        duration: 3000,
+        isClosable: true,
+      });
+      navigate("/");
+    }
+  };
 
   return (
     <Box className="event-detail">
@@ -60,6 +78,7 @@ export const EventPage = () => {
       >
         ✏️ Edit Event
       </Button>
+      <Button onClick={handleDelete}> Delete Event</Button>
       <Image src={eventData.image} alt={eventData.name} />
       <Text>
         date: {dateOnly}

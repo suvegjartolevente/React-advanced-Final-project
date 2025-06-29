@@ -19,6 +19,11 @@ function eventReducer(state, action) {
           evt.id === action.payload.id ? action.payload : evt
         ),
       };
+    case "DELETE_EVENT":
+      return {
+        ...state,
+        events: state.events.filter((evt) => evt.id !== action.payload),
+      };
     default:
       return state;
   }
@@ -56,10 +61,17 @@ export const EventProvider = ({ children }) => {
     dispatch({ type: "EDIT_EVENT", payload: data });
     return data;
   };
+  const deleteEvent = async (id) => {
+    await fetch(`http://localhost:3000/events/${id}`, {
+      method: "DELETE",
+    });
+
+    dispatch({ type: "DELETE_EVENT", payload: id });
+  };
 
   return (
     <UpdateContext.Provider
-      value={{ events: state.events, addEvent, editEvent }}
+      value={{ events: state.events, addEvent, editEvent, deleteEvent }}
     >
       {children}
     </UpdateContext.Provider>
