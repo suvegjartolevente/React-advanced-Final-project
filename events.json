@@ -20,15 +20,15 @@
     {
       "id": 1,
       "createdBy": 1,
-      "title": "Trampoline party",
+      "title": "Trampoline party   123",
       "description": "Bounce around with your friends",
       "image": "https://i.pinimg.com/736x/3d/2f/af/3d2faf4e3188d34a9fcdc00df59e77b0.jpg",
       "categoryIds": [
         2
       ],
       "location": "My back yard",
-      "startTime": "2023-03-10T18:00:00.000Z",
-      "endTime": "2023-03-10T19:00:00.000Z"
+      "startTime": "2023-03-10T11:00:00.000Z",
+      "endTime": "2023-03-10T12:00:00.000Z"
     },
     {
       "id": 2,
@@ -242,6 +242,54 @@
       "endTime": "2025-06-27T12:25:00.000Z",
       "createdBy": 1,
       "id": 18
+    },
+    {
+      "title": "Tennis games second event 2",
+      "description": "Play tennis with friend",
+      "image": "https://picsum.photos/600/400",
+      "categoryIds": [
+        1
+      ],
+      "startTime": "2025-01-27T13:15:00.000Z",
+      "endTime": "2031-09-27T03:16:00.000Z",
+      "createdBy": 3,
+      "id": 19
+    },
+    {
+      "title": "Trampoline party eee 2.",
+      "description": "fefefefefef",
+      "image": "https://picsum.photos/600/400",
+      "categoryIds": [
+        1
+      ],
+      "startTime": "2025-06-27T07:42:00.000Z",
+      "endTime": "2025-06-28T07:42:00.000Z",
+      "createdBy": 3,
+      "id": 20
+    },
+    {
+      "title": "Budapest Pride",
+      "description": "LOve all",
+      "image": "https://picsum.photos/600/400",
+      "categoryIds": [
+        3
+      ],
+      "startTime": "2025-06-29T16:35:00.000Z",
+      "endTime": "2025-06-29T21:35:00.000Z",
+      "createdBy": 2,
+      "id": 21
+    },
+    {
+      "title": "aaa",
+      "description": "sss",
+      "image": "Cat",
+      "categoryIds": [
+        1
+      ],
+      "startTime": "2025-06-21T16:49:00.000Z",
+      "endTime": "2025-06-29T16:54:00.000Z",
+      "createdBy": 2,
+      "id": 22
     }
   ],
   "categories": [

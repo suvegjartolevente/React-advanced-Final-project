@@ -29,10 +29,10 @@ export const ModalForm = ({ isOpen, onClose, initialData }) => {
               <EditEventForm
                 onSuccess={onClose}
                 initialData={initialData}
-                // mode={isEditMode ? "edit" : "add"}
+               
               />
             ) : (
-              <AddEventForm />
+              <AddEventForm onSuccess={onClose}/>
             )}
           </ModalBody>
           <ModalFooter>

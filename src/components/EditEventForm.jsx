@@ -12,14 +12,18 @@ import { useEvents } from "./UpdateProvider";
 export const EditEventForm = ({ onSuccess, initialData }) => {
   const [error, setError] = useState("");
   const toast = useToast();
-  const { addEvent } = useEvents();
+  const { editEvent } = useEvents();
   const [title, setTitle] = useState(initialData?.title || "");
   const [description, setDescription] = useState(
     initialData?.description || ""
   );
   const [image, setImage] = useState(initialData?.image || "");
-  const [startTime, setStartTime] = useState(initialData?.startTime?.slice(0,16) || "");
-  const [endTime, setEndTime] = useState(initialData?.endTime.endTime?.slice(0,16) || "");
+  const [startTime, setStartTime] = useState(
+    initialData?.startTime?.slice(0, 16) || ""
+  );
+  const [endTime, setEndTime] = useState(
+    initialData?.endTime?.slice(0, 16) || ""
+  );
 
   const [category, setCategory] = useState(
     initialData?.categoryIds?.[0]?.toString() || ""
@@ -29,12 +33,14 @@ export const EditEventForm = ({ onSuccess, initialData }) => {
   const start = new Date(startTime);
   const end = new Date(endTime);
 
-  const submitForm = () => {
+  const submitForm = (e) => {
+    e.preventDefault();
     if (endTime <= startTime) {
       setError("End time must be after start time.");
       return;
     }
     const EditedEvent = {
+      id: initialData.id,
       title,
       description,
       image,
@@ -44,7 +50,10 @@ export const EditEventForm = ({ onSuccess, initialData }) => {
       createdBy: parseInt(host),
     };
 
-    addEvent(EditedEvent);
+    
+   
+
+     editEvent(EditedEvent);
 
     toast({
       title: "Event edited",
@@ -54,6 +63,7 @@ export const EditEventForm = ({ onSuccess, initialData }) => {
     });
     setError("");
     if (onSuccess) onSuccess();
+    
   };
 
   return (

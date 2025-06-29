@@ -19,7 +19,6 @@ export const loader = async ({ params }) => {
 
 export const EventPage = () => {
   const [eventToEdit, setEventToEdit] = useState(null);
-  // const [selectedEvent, setSelectedEvent] = useState(null);
    const { isOpen, onOpen, onClose } = useDisclosure();
   const { categories, users } = useUserCategory();
   const { event } = useLoaderData();
@@ -28,7 +27,7 @@ export const EventPage = () => {
   const fixedEndTime = timeFormatter(event.endTime);
   const categoryNames = categoryFormatter(event.categoryIds, categories);
   const host = getUser(users, event.createdBy);
-  console.log("Event userId:", event.userId);
+  console.log("Event userId:", event.createdBy);
   return (
     <Box className="event-detail">
       <ModalForm isOpen={isOpen} onClose={onClose} initialData={eventToEdit} />
