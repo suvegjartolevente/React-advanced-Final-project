@@ -1,12 +1,13 @@
-import {  Input } from "@chakra-ui/react";
+import { Input, Text } from "@chakra-ui/react";
 
-
-export const EventSearch = ({searchField,onChange}) => {
-
+export const EventSearch = ({ searchField, onChange }) => {
   return (
     <>
-      <label>Search for events:</label>
+      <Text fontWeight="bold" fontSize="2xl" marginTop={3}  >Search for events:</Text>
       <Input
+      marginTop={3}
+      marginBottom={3}
+        bg="white"
         type="text"
         placeholder="Type to search"
         value={searchField}

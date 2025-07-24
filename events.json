@@ -19,7 +19,7 @@
   "events": [
     {
       "id": 1,
-      "createdBy": 1,
+      "createdBy": 2,
       "title": "Trampoline party   ",
       "description": "Bounce around with your friends",
       "image": "https://i.pinimg.com/736x/3d/2f/af/3d2faf4e3188d34a9fcdc00df59e77b0.jpg",
@@ -27,8 +27,8 @@
         2
       ],
       "location": "My back yard",
-      "startTime": "2023-03-10T02:00:00.000Z",
-      "endTime": "2023-03-10T03:00:00.000Z"
+      "startTime": "2023-03-09T23:00:00.000Z",
+      "endTime": "2023-03-11T03:04:00.000Z"
     },
     {
       "id": 2,
@@ -136,18 +136,6 @@
       "endTime": "2023-03-19T21:00:00.000Z"
     },
     {
-      "title": "dwdw",
-      "description": "fefefefefef",
-      "image": "ththth",
-      "categoryIds": [
-        2
-      ],
-      "startTime": "2025-06-07T15:41:00.000Z",
-      "endTime": "2025-06-27T15:41:00.000Z",
-      "createdBy": 1,
-      "id": 10
-    },
-    {
       "title": "Abbath",
       "description": "Koncert",
       "image": "https://picsum.photos/600/400",
@@ -158,42 +146,6 @@
       "endTime": "2025-06-15T15:55:00.000Z",
       "createdBy": 1,
       "id": 11
-    },
-    {
-      "title": "Kat show",
-      "description": "A lot of nice cats",
-      "image": "\"https://picsum.photos/600/400\"",
-      "categoryIds": [
-        3
-      ],
-      "startTime": "2025-04-11T07:55:00.000Z",
-      "endTime": "2025-06-30T07:55:00.000Z",
-      "createdBy": 3,
-      "id": 12
-    },
-    {
-      "title": "lololo",
-      "description": "fefefefefef",
-      "image": "\"https://picsum.photos/600/400\"",
-      "categoryIds": [
-        1
-      ],
-      "startTime": "2025-06-25T08:00:00.000Z",
-      "endTime": "2025-06-25T13:00:00.000Z",
-      "createdBy": 2,
-      "id": 13
-    },
-    {
-      "title": "Football",
-      "description": "Match",
-      "image": "\"https://picsum.photos/600/400\"",
-      "categoryIds": [
-        1
-      ],
-      "startTime": "2025-06-25T08:47:00.000Z",
-      "endTime": "2025-06-25T13:47:00.000Z",
-      "createdBy": 2,
-      "id": 14
     },
     {
       "title": "Levi",
@@ -208,40 +160,16 @@
       "id": 15
     },
     {
-      "title": "Pókicic",
-      "description": "Kis cica",
+      "title": "Test 01",
+      "description": "testing",
       "image": "https://picsum.photos/600/400",
-      "categoryIds": [
-        2
-      ],
-      "startTime": "2025-06-18T18:27:00.000Z",
-      "endTime": "2025-07-26T18:27:00.000Z",
-      "createdBy": 2,
-      "id": 16
-    },
-    {
-      "title": "d",
-      "description": "dww",
-      "image": "dw",
-      "categoryIds": [
-        2
-      ],
-      "startTime": "2025-05-30T07:10:00.000Z",
-      "endTime": "2025-06-28T07:10:00.000Z",
-      "createdBy": 1,
-      "id": 17
-    },
-    {
-      "title": "aaa",
-      "description": "sss",
-      "image": "Cat",
       "categoryIds": [
         1
       ],
-      "startTime": "2025-06-21T16:49:00.000Z",
-      "endTime": "2025-06-29T16:54:00.000Z",
-      "createdBy": 2,
-      "id": 22
+      "startTime": "2025-07-24T14:48:00.000Z",
+      "endTime": "2025-07-31T14:48:00.000Z",
+      "createdBy": 1,
+      "id": 16
     }
   ],
   "categories": [

@@ -9,7 +9,8 @@ export const Root = () => {
   return (
     <EventProvider>
       <UserCategoryProvider>
-        <Box>
+        <Box bg={ "#e7faff" } p={6}
+        >
           <Navigation />
           <Outlet />
         </Box>

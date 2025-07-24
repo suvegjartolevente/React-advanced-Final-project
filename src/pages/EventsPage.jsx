@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Box,
   Button,
+  Center,
+  Flex,
   Heading,
   Image,
+  SimpleGrid,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -23,10 +26,36 @@ export const EventsPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [searchField, setSearchField] = useState("");
   const [selectedFilter, setSelectedFilter] = useState(null);
-   const [eventToEdit, setEventToEdit] = useState(null);
+  const [eventToEdit, setEventToEdit] = useState(null);
+  const containerRef = useRef();
+  const buttonRefs = useRef([]);
+  const [highlightStyle, setHighlightStyle] = useState({});
   const handleFilterClick = (filter) => {
     setSelectedFilter((prevFilter) => (prevFilter === filter ? null : filter));
   };
+
+  const categoriesList = [
+    { id: 1, label: "Sports" },
+    { id: 2, label: "Games" },
+    { id: 3, label: "Relaxation" },
+  ];
+
+  useEffect(() => {
+    if (selectedFilter === null) {
+      setHighlightStyle({});
+      return;
+    }
+    const node = buttonRefs.current[selectedFilter - 1];
+    if (node && containerRef.current) {
+      const rect = node.getBoundingClientRect();
+      const parentRect = containerRef.current.getBoundingClientRect();
+      setHighlightStyle({
+        left: rect.left - parentRect.left + "px",
+        width: rect.width + "px",
+        height: rect.height + "px",
+      });
+    }
+  }, [selectedFilter]);
 
   const matchedEvents = events.filter((hit) => {
     const eventsSearch = hit.title
@@ -40,56 +69,136 @@ export const EventsPage = () => {
 
   return (
     <Box className="events-list">
-      <Heading>List of events</Heading>
-      <EventSearch
-        searchField={searchField}
-        onChange={(e) => setSearchField(e.target.value)}
-      />
-      <Box>
-        <Button onClick={() => handleFilterClick(1)}>Sports</Button>
-        <Button onClick={() => handleFilterClick(2)}>Games</Button>
-        <Button onClick={() => handleFilterClick(3)}>Relaxation</Button>
+      <Heading align="Center" margin={8} fontSize="5xl">
+        List of events
+      </Heading>
+      <Box
+        w={{ base: "auto", md: "33.33%" }}
+        mx={{ base: "auto", md: "0" }}
+        ml={{ md: "0" }}
+        mr={{ md: "auto" }}
+      >
+        <EventSearch
+          searchField={searchField}
+          onChange={(e) => setSearchField(e.target.value)}
+        />
+
+        <Box
+          bg={"white"}
+          borderRadius="full"
+          display="flex"
+          position="relative"
+          ref={containerRef}
+          overflowX="auto"
+          scrollSnapType="x mandatory"
+          scrollBehavior="smooth"
+          gap={2}
+          p={2}
+        >
+          <Box
+            position="absolute"
+            bg="#63ddf6"
+            borderRadius="full"
+            transition="all 0.3s ease"
+            zIndex={0}
+            {...highlightStyle}
+          />
+
+          {categoriesList.map((cat, idx) => (
+            <Button
+              display=""
+              w="100%"
+              justifyContent="space-between"
+              fontSize="xl"
+              key={cat.id}
+              ref={(el) => (buttonRefs.current[idx] = el)}
+              onClick={() => handleFilterClick(cat.id)}
+              variant="ghost"
+              color="black"
+              zIndex={1}
+              _hover={{ bg: "transparent", color: "gray.500" }}
+              _active={{ bg: "transparent" }}
+            >
+              {cat.label}
+            </Button>
+          ))}
+        </Box>
       </Box>
-       <Button colorScheme="blue" my={4} onClick={()=>{setEventToEdit(null); onOpen();}}> 
-     
+      <Button
+        fontSize="xl"
+        borderRadius="full"
+        bg="#48dbf9"
+        my={4}
+        onClick={() => {
+          setEventToEdit(null);
+          onOpen();
+        }}
+      >
         ➕ Add Event
       </Button>
-      {matchedEvents.length > 0 ? (
-        matchedEvents.map((event) => {
-          const dateOnly = dateFormatter(event.startTime);
-          const fixedStartTime = timeFormatter(event.startTime);
-          const fixedEndTime = timeFormatter(event.endTime);
+      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={8} marginTop={7}>
+        {matchedEvents.length > 0 ? (
+          matchedEvents.map((event) => {
+            const dateOnly = dateFormatter(event.startTime);
+            const fixedStartTime = timeFormatter(event.startTime);
+            const fixedEndTime = timeFormatter(event.endTime);
 
-          const categoryNames = categoryFormatter(
-            event.categoryIds,
-            categories
-          );
+            const categoryNames = categoryFormatter(
+              event.categoryIds,
+              categories
+            );
 
-          return (
-            <Link to={`/event/${event.id}`} key={event.id}>
-              <Box display="flex" className="event">
-                <h2>{event.title}</h2>
-                <p>{event.description}</p>
-                <Image
-                  src={event.image}
-                  alt={event.name}
-                  maxW="30%"
-                  maxH="30%"
-                ></Image>
-                <p>
-                  date: {dateOnly}
-                  From: {fixedStartTime} to: {fixedEndTime}
-                </p>
-                {categoryNames && <Text>Category: {categoryNames}</Text>}
-              </Box>
-            </Link>
-          );
-        })
-      ) : (
-        <Text fontSize="lg" mt={4}>
-          No events found !
-        </Text>
-      )}
+            return (
+              <Link to={`/event/${event.id}`} key={event.id}>
+                <Box
+                  className="event"
+                  bg="#fce2d5"
+                  borderRadius="30px"
+                  padding={1}
+                  _hover={{
+                    boxShadow: "16px 15px 17px 3px rgba(102, 211, 208, 0.75)",
+                  }}
+                >
+                  <Box margin={6}>
+                    <Text align="Center" fontSize="larger" fontWeight="bold">
+                      {event.title}{" "}
+                    </Text>
+                    <Text align="Center" margin={3}>
+                      {event.description}
+                    </Text>
+                    <Image
+                      mx="auto"
+                      borderRadius="30px"
+                      src={event.image}
+                      alt={event.name}
+                      maxW="60%"
+                      maxH="60%"
+                    ></Image>
+                    <Text>
+                      📅 Date: {dateOnly}⏰ Time: {fixedStartTime} -{" "}
+                      {fixedEndTime}
+                    </Text>
+                    {categoryNames && (
+                      <Text
+                        marginTop={2}
+                        w={{ base: "auto", md: "33.33%" }}
+                        bg="#FEF6F2"
+                        borderRadius="full"
+                      >
+                        Category: {categoryNames}
+                      </Text>
+                    )}
+                  </Box>
+                </Box>
+              </Link>
+            );
+          })
+        ) : (
+          <Text fontSize="lg" mt={4}>
+            No events found !
+          </Text>
+        )}
+      </SimpleGrid>
       <ModalForm isOpen={isOpen} onClose={onClose} initialData={eventToEdit} />
     </Box>
   );

@@ -46,7 +46,7 @@ export const EventPage = () => {
       await deleteEvent(eventData.id);
       toast({
         title: "Event Deleted",
-        status:"info",
+        status: "info",
         duration: 3000,
         isClosable: true,
       });
@@ -55,7 +55,7 @@ export const EventPage = () => {
   };
 
   return (
-    <Box className="event-detail">
+    <Box className="event-detail" align="center" margin={6}>
       <ModalForm
         isOpen={isOpen}
         initialData={eventToEdit}
@@ -65,28 +65,40 @@ export const EventPage = () => {
         }}
         onClose={onClose}
       />
-      <Heading>{eventData.title}</Heading>
-      <Text>{eventData.description}</Text>
+      <Box className="event-card" mg={4} align="center"  w={{ base: "100%", md: "70%", lg: "50%" }}  bg="#fce2d5" borderRadius="30px" padding={1}>
+        <Heading align="Center" margin={8} fontSize="3xl">
+          {eventData.title}
+        </Heading>
+        <Text>{eventData.description}</Text>
 
-      <Button
-        colorScheme="blue"
-        my={4}
-        onClick={() => {
-          setEventToEdit(eventData);
-          onOpen();
-        }}
-      >
-        ✏️ Edit Event
-      </Button>
-      <Button onClick={handleDelete}> Delete Event</Button>
-      <Image src={eventData.image} alt={eventData.name} />
-      <Text>
-        date: {dateOnly}
-        From: {fixedStartTime} to: {fixedEndTime}
-      </Text>
-      {categoryNames && <Text>Category: {categoryNames}</Text>}
-      {host && <Text>Organized by: {host.name}</Text>}
-      {host && <Image src={host.image} alt={host.name} />}
+        <Button
+         fontSize="xl"
+        borderRadius="full"
+        bg="#48dbf9"
+          
+          my={4}
+          onClick={() => {
+            setEventToEdit(eventData);
+            onOpen();
+          }}
+        >
+          ✏️ Edit Event
+        </Button>
+        <Button onClick={handleDelete}  fontSize="xl"
+        borderRadius="full"
+        bg="#48dbf9" > Delete Event</Button>
+        <Image src={eventData.image} alt={eventData.name} borderRadius="30px"  />
+        <Text>
+          📅 Date:  {dateOnly}
+          ⏰ Time:  {fixedStartTime} - {fixedEndTime}
+        </Text>
+        {categoryNames && <Text  marginTop={2}
+                        w={{ base: "auto", md: "33.33%" }}
+                        bg="#FEF6F2"
+                        borderRadius="full">Category: {categoryNames}</Text>}
+        {host && <Text>Organized by: {host.name}</Text>}
+        {host && <Image src={host.image} alt={host.name} w="50%" h="50%" borderRadius="full" />}
+      </Box>
     </Box>
   );
 };
