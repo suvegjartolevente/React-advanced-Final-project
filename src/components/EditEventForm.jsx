@@ -50,11 +50,14 @@ export const EditEventForm = ({ onSuccess, initialData,onAfterEdit  }) => {
       createdBy: parseInt(host),
     };
 
-    
-   
+    try {
+      const updated = await editEvent(EditedEvent);
 
-     const updated = await editEvent(EditedEvent);
-     if (onAfterEdit) onAfterEdit(updated);
+      if(!updated || updated.error){
+        throw new Error("Failed to update event.");
+      }
+      if (onAfterEdit) onAfterEdit(updated);
+  
 
     toast({
       title: "Event edited",
@@ -64,6 +67,16 @@ export const EditEventForm = ({ onSuccess, initialData,onAfterEdit  }) => {
     });
     setError("");
     if (onSuccess) onSuccess();
+  } catch (err){
+    setError("Could noz update event.Please try again.");
+    toast({
+      title: "Error",
+      description: err.message || "update failed",
+      status: "error",
+      duration: 3000,
+      isClosable: true,
+    });
+  }
     
   };
 

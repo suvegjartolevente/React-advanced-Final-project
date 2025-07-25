@@ -51,6 +51,7 @@ export const EventProvider = ({ children }) => {
   };
 
   const editEvent = async (eventToEdit) => {
+    // throw new Error("Simulated failure");
     const { id, ...payload } = eventToEdit;
     const res = await fetch(`http://localhost:3000/events/${id}`, {
       method: "PATCH",
