@@ -55,7 +55,7 @@ export const EventPage = () => {
   };
 
   return (
-    <Box className="event-detail" align="center" margin={6}>
+    <Box className="event-detail" align="center" margin={6} >
       <ModalForm
         isOpen={isOpen}
         initialData={eventToEdit}
@@ -65,8 +65,8 @@ export const EventPage = () => {
         }}
         onClose={onClose}
       />
-      <Box className="event-card" mg={4} align="center"  w={{ base: "100%", md: "70%", lg: "50%" }}  bg="#fce2d5" borderRadius="30px" padding={1}>
-        <Heading align="Center" margin={8} fontSize="3xl">
+      <Box className="event-card" mg={4} align="center"    w={{ base: "100%", md: "70%", lg: "50%" }}  bg="#fce2d5" borderRadius="30px" padding={1}>
+        <Heading  margin={8} fontSize="3xl">
           {eventData.title}
         </Heading>
         <Text>{eventData.description}</Text>
@@ -88,7 +88,7 @@ export const EventPage = () => {
         borderRadius="full"
         bg="#48dbf9" > Delete Event</Button>
         <Image src={eventData.image} alt={eventData.name} borderRadius="30px"  />
-        <Text>
+        <Text m={4}>
           📅 Date:  {dateOnly}
           ⏰ Time:  {fixedStartTime} - {fixedEndTime}
         </Text>
@@ -97,7 +97,7 @@ export const EventPage = () => {
                         bg="#FEF6F2"
                         borderRadius="full">Category: {categoryNames}</Text>}
         {host && <Text>Organized by: {host.name}</Text>}
-        {host && <Image src={host.image} alt={host.name} w="50%" h="50%" borderRadius="full" />}
+        {host && <Image src={host.image} alt={host.name} w="40%" h="40%" borderRadius="full" p={2}/>}
       </Box>
     </Box>
   );

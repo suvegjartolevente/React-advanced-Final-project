@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   Box,
   Button,
-  Center,
-  Flex,
   Heading,
   Image,
   SimpleGrid,
@@ -159,11 +157,11 @@ export const EventsPage = () => {
                     boxShadow: "16px 15px 17px 3px rgba(102, 211, 208, 0.75)",
                   }}
                 >
-                  <Box margin={6}>
-                    <Text align="Center" fontSize="larger" fontWeight="bold">
+                  <Box margin={6} display="flex" flexDirection="column" alignItems="center">
+                    <Text  fontSize="larger" fontWeight="bold">
                       {event.title}{" "}
                     </Text>
-                    <Text align="Center" margin={3}>
+                    <Text  margin={3}>
                       {event.description}
                     </Text>
                     <Image
@@ -174,8 +172,11 @@ export const EventsPage = () => {
                       maxW="60%"
                       maxH="60%"
                     ></Image>
-                    <Text>
-                      📅 Date: {dateOnly}⏰ Time: {fixedStartTime} -{" "}
+                    <Text padding={2}>
+                      📅 Date: {dateOnly}
+                    </Text>
+                    <Text padding={2}>
+                      ⏰ Time: {fixedStartTime} -{" "}
                       {fixedEndTime}
                     </Text>
                     {categoryNames && (
@@ -184,6 +185,7 @@ export const EventsPage = () => {
                         w={{ base: "auto", md: "33.33%" }}
                         bg="#FEF6F2"
                         borderRadius="full"
+                        padding={2}
                       >
                         Category: {categoryNames}
                       </Text>
