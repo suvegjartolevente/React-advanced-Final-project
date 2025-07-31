@@ -71,7 +71,7 @@ export const EventsPage = () => {
         List of events
       </Heading>
       <Box
-        w={{ base: "auto", md: "33.33%" }}
+        w={{ base: "auto", md: "47.33%" }}
         mx={{ base: "auto", md: "0" }}
         ml={{ md: "0" }}
         mr={{ md: "auto" }}
