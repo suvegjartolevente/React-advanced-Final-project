@@ -37,6 +37,7 @@ export const AddEventForm = ({ onSuccess }) => {
 
     if (endTime <= startTime) {
       setError("End time must be after start time.");
+      console.log("Error  End time...");
       return;
     }
     const newEvent = {
@@ -91,7 +92,11 @@ export const AddEventForm = ({ onSuccess }) => {
         <option value="2">Sophia Collins</option>
         <option value="3">Emily Carter</option>
       </Select>
-
+      {error && (
+        <Box color="red.500" mt={2}>
+          {error}
+        </Box>
+      )}
       <Button type="submit">Add Event</Button>
     </Box>
   );
