@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Checkbox,
   FormLabel,
   Input,
   Select,
@@ -21,12 +22,18 @@ export const AddEventForm = ({ onSuccess }) => {
     const image = event.target.elements.image.value;
     const startTime = event.target.elements.startTime.value;
     const endTime = event.target.elements.endTime.value;
-
-    const category = event.target.elements.category.value;
     const host = event.target.elements.host.value;
 
     const start = new Date(startTime);
     const end = new Date(endTime);
+
+    const categoryCheckboxes = event.target.querySelectorAll(
+      'input[name="category"]:checked'
+    );
+
+    const selected = Array.from(categoryCheckboxes).map((checkbox) =>
+      parseInt(checkbox.value)
+    );
 
     if (endTime <= startTime) {
       setError("End time must be after start time.");
@@ -36,7 +43,7 @@ export const AddEventForm = ({ onSuccess }) => {
       title,
       description,
       image,
-      categoryIds: [parseInt(category)],
+      categoryIds: selected,
       startTime: start.toISOString(),
       endTime: end.toISOString(),
       createdBy: parseInt(host),
@@ -67,11 +74,17 @@ export const AddEventForm = ({ onSuccess }) => {
       <FormLabel>End time</FormLabel>
       <Input type="datetime-local" name="endTime"></Input>
       <FormLabel>Category</FormLabel>
-      <Select name="category" placeholder="select category">
-        <option value="1">sports</option>
-        <option value="2">games</option>
-        <option value="3">relaxation</option>
-      </Select>
+
+      <Checkbox name="category" value="1">
+        sports
+      </Checkbox>
+      <Checkbox name="category" value="2">
+        games
+      </Checkbox>
+      <Checkbox name="category" value="3">
+        relaxation
+      </Checkbox>
+
       <FormLabel>Host</FormLabel>
       <Select name="host" placeholder="select host">
         <option value="1">Michael Turner</option>

@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Checkbox,
   FormLabel,
   Input,
   Select,
@@ -118,16 +119,15 @@ export const EditEventForm = ({ onSuccess, initialData,onAfterEdit  }) => {
         onChange={(e) => setEndTime(e.target.value)}
       ></Input>
       <FormLabel>Category</FormLabel>
-      <Select
-        name="category"
-        value={category}
-        placeholder="select category"
-        onChange={(e) => setCategory(e.target.value)}
-      >
-        <option value="1">sports</option>
-        <option value="2">games</option>
-        <option value="3">relaxation</option>
-      </Select>
+      <Checkbox name="category" value="1">
+        sports
+      </Checkbox>
+      <Checkbox name="category" value="2">
+        games
+      </Checkbox>
+      <Checkbox name="category" value="3">
+        relaxation
+      </Checkbox>
       <FormLabel>Host</FormLabel>
       <Select
         name="host"

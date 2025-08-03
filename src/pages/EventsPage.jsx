@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -23,13 +23,13 @@ export const EventsPage = () => {
   const { categories } = useUserCategory();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [searchField, setSearchField] = useState("");
-  const [selectedFilter, setSelectedFilter] = useState(null);
+  const [selectedFilters, setSelectedFilters] = useState([]);
   const [eventToEdit, setEventToEdit] = useState(null);
-  const containerRef = useRef();
-  const buttonRefs = useRef([]);
-  const [highlightStyle, setHighlightStyle] = useState({});
-  const handleFilterClick = (filter) => {
-    setSelectedFilter((prevFilter) => (prevFilter === filter ? null : filter));
+
+  const handleFilterClick = (id) => {
+    setSelectedFilters((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
   };
 
   const categoriesList = [
@@ -38,30 +38,16 @@ export const EventsPage = () => {
     { id: 3, label: "Relaxation" },
   ];
 
-  useEffect(() => {
-    if (selectedFilter === null) {
-      setHighlightStyle({});
-      return;
-    }
-    const node = buttonRefs.current[selectedFilter - 1];
-    if (node && containerRef.current) {
-      const rect = node.getBoundingClientRect();
-      const parentRect = containerRef.current.getBoundingClientRect();
-      setHighlightStyle({
-        left: rect.left - parentRect.left + "px",
-        width: rect.width + "px",
-        height: rect.height + "px",
-      });
-    }
-  }, [selectedFilter]);
-
   const matchedEvents = events.filter((hit) => {
     const eventsSearch = hit.title
       .toLowerCase()
       .includes(searchField.toLowerCase());
-    const categoryFilter = selectedFilter
-      ? hit.categoryIds.includes(selectedFilter)
-      : true;
+
+    const categoryFilter =
+      selectedFilters.length === 0
+        ? true
+        : selectedFilters.some((id) => hit.categoryIds.includes(id));
+
     return eventsSearch && categoryFilter;
   });
 
@@ -86,30 +72,21 @@ export const EventsPage = () => {
           borderRadius="full"
           display="flex"
           position="relative"
-          ref={containerRef}
           overflowX="auto"
-          scrollSnapType="x mandatory"
-          scrollBehavior="smooth"
           gap={2}
           p={2}
         >
-          <Box
-            position="absolute"
-            bg="#63ddf6"
-            borderRadius="full"
-            transition="all 0.3s ease"
-            zIndex={0}
-            {...highlightStyle}
-          />
+          <Box position="absolute" bg="#63ddf6" borderRadius="full" />
 
-          {categoriesList.map((cat, idx) => (
+          {categoriesList.map((cat) => (
             <Button
+              borderRadius="full"
+              bg={selectedFilters.includes(cat.id) ? "#48dbf9" : "blue.500"}
               display=""
               w="100%"
               justifyContent="space-between"
               fontSize="xl"
               key={cat.id}
-              ref={(el) => (buttonRefs.current[idx] = el)}
               onClick={() => handleFilterClick(cat.id)}
               variant="ghost"
               color="black"
@@ -157,13 +134,16 @@ export const EventsPage = () => {
                     boxShadow: "16px 15px 17px 3px rgba(102, 211, 208, 0.75)",
                   }}
                 >
-                  <Box margin={6} display="flex" flexDirection="column" alignItems="center">
-                    <Text  fontSize="larger" fontWeight="bold">
+                  <Box
+                    margin={6}
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                  >
+                    <Text fontSize="larger" fontWeight="bold">
                       {event.title}{" "}
                     </Text>
-                    <Text  margin={3}>
-                      {event.description}
-                    </Text>
+                    <Text margin={3}>{event.description}</Text>
                     <Image
                       mx="auto"
                       borderRadius="30px"
@@ -172,12 +152,9 @@ export const EventsPage = () => {
                       maxW="60%"
                       maxH="60%"
                     ></Image>
+                    <Text padding={2}>📅 Date: {dateOnly}</Text>
                     <Text padding={2}>
-                      📅 Date: {dateOnly}
-                    </Text>
-                    <Text padding={2}>
-                      ⏰ Time: {fixedStartTime} -{" "}
-                      {fixedEndTime}
+                      ⏰ Time: {fixedStartTime} - {fixedEndTime}
                     </Text>
                     {categoryNames && (
                       <Text
