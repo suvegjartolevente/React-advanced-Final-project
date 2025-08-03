@@ -125,33 +125,53 @@ export const EventsPage = () => {
 
             return (
               <Link to={`/event/${event.id}`} key={event.id}>
-                <Box
-                  className="event"
-                  bg="#fce2d5"
-                  borderRadius="30px"
-                  padding={1}
-                  _hover={{
-                    boxShadow: "16px 15px 17px 3px rgba(102, 211, 208, 0.75)",
-                  }}
-                >
-                  <Box
-                    margin={6}
-                    display="flex"
-                    flexDirection="column"
-                    alignItems="center"
-                  >
-                    <Text fontSize="larger" fontWeight="bold">
-                      {event.title}{" "}
-                    </Text>
-                    <Text margin={3}>{event.description}</Text>
-                    <Image
-                      mx="auto"
-                      borderRadius="30px"
-                      src={event.image}
-                      alt={event.name}
-                      maxW="60%"
-                      maxH="60%"
-                    ></Image>
+                 <Box
+    minH="550px" // adjust to desired height
+    h="100%"
+    className="event"
+    bg="#fce2d5"
+    borderRadius="30px"
+    padding={1}
+    display="flex"
+    flexDirection="column"
+    justifyContent="space-between"
+    _hover={{
+      boxShadow: "16px 15px 17px 3px rgba(102, 211, 208, 0.75)",
+    }}
+  >
+    <Box
+      margin={6}
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      flex="1"
+    >
+      <Text fontSize="larger" fontWeight="bold" textAlign="center">
+        {event.title}
+      </Text>
+
+      <Text margin={3} textAlign="center">
+        {event.description}
+      </Text>
+
+      <Box
+        w="100%"
+        h="160px" 
+        overflow="hidden"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        mb={2}
+      >
+        <Image
+          src={event.image}
+          alt={event.name}
+          objectFit="cover"
+          h="100%"
+          w="auto"
+          borderRadius="20px"
+        />
+      </Box>
                     <Text padding={2}>📅 Date: {dateOnly}</Text>
                     <Text padding={2}>
                       ⏰ Time: {fixedStartTime} - {fixedEndTime}

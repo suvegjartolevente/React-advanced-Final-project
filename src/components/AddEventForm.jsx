@@ -37,7 +37,7 @@ export const AddEventForm = ({ onSuccess }) => {
 
     if (endTime <= startTime) {
       setError("End time must be after start time.");
-      console.log("Error  End time...");
+      
       return;
     }
     const newEvent = {

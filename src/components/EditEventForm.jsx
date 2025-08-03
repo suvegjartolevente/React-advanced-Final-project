@@ -10,7 +10,7 @@ import {
 import { useState } from "react";
 import { useEvents } from "./UpdateProvider";
 
-export const EditEventForm = ({ onSuccess, initialData,onAfterEdit  }) => {
+export const EditEventForm = ({ onSuccess, initialData, onAfterEdit }) => {
   const [error, setError] = useState("");
   const toast = useToast();
   const { editEvent } = useEvents();
@@ -26,13 +26,20 @@ export const EditEventForm = ({ onSuccess, initialData,onAfterEdit  }) => {
     initialData?.endTime?.slice(0, 16) || ""
   );
 
-  const [category, setCategory] = useState(
-    initialData?.categoryIds?.[0]?.toString() || ""
-  );
+  const [category, setCategory] = useState(initialData?.categoryIds || []);
+
   const [host, setHost] = useState(initialData?.createdBy?.toString() || "");
 
   const start = new Date(startTime);
   const end = new Date(endTime);
+
+  const handleCategoryChange = (categoryId) => {
+    setCategory((prev) =>
+      prev.includes(categoryId)
+        ? prev.filter((id) => id !== categoryId)
+        : [...prev, categoryId]
+    );
+  };
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -45,7 +52,7 @@ export const EditEventForm = ({ onSuccess, initialData,onAfterEdit  }) => {
       title,
       description,
       image,
-      categoryIds: [parseInt(category)],
+      categoryIds: category,
       startTime: start.toISOString(),
       endTime: end.toISOString(),
       createdBy: parseInt(host),
@@ -54,31 +61,29 @@ export const EditEventForm = ({ onSuccess, initialData,onAfterEdit  }) => {
     try {
       const updated = await editEvent(EditedEvent);
 
-      if(!updated || updated.error){
+      if (!updated || updated.error) {
         throw new Error("Failed to update event.");
       }
       if (onAfterEdit) onAfterEdit(updated);
-  
 
-    toast({
-      title: "Event edited",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    });
-    setError("");
-    if (onSuccess) onSuccess();
-  } catch (err){
-    setError("Could noz update event.Please try again.");
-    toast({
-      title: "Error",
-      description: err.message || "update failed",
-      status: "error",
-      duration: 3000,
-      isClosable: true,
-    });
-  }
-    
+      toast({
+        title: "Event edited",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      setError("");
+      if (onSuccess) onSuccess();
+    } catch (err) {
+      setError("Could not update event.Please try again.");
+      toast({
+        title: "Error",
+        description: err.message || "update failed",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   };
 
   return (
@@ -119,13 +124,28 @@ export const EditEventForm = ({ onSuccess, initialData,onAfterEdit  }) => {
         onChange={(e) => setEndTime(e.target.value)}
       ></Input>
       <FormLabel>Category</FormLabel>
-      <Checkbox name="category" value="1">
+      <Checkbox
+        name="category"
+        value="1"
+        isChecked={category.includes(1)}
+        onChange={() => handleCategoryChange(1)}
+      >
         sports
       </Checkbox>
-      <Checkbox name="category" value="2">
+      <Checkbox
+        name="category"
+        value="2"
+        isChecked={category.includes(2)}
+        onChange={() => handleCategoryChange(2)}
+      >
         games
       </Checkbox>
-      <Checkbox name="category" value="3">
+      <Checkbox
+        name="category"
+        value="3"
+        isChecked={category.includes(3)}
+        onChange={() => handleCategoryChange(3)}
+      >
         relaxation
       </Checkbox>
       <FormLabel>Host</FormLabel>
@@ -139,6 +159,11 @@ export const EditEventForm = ({ onSuccess, initialData,onAfterEdit  }) => {
         <option value="2">Sophia Collins</option>
         <option value="3">Emily Carter</option>
       </Select>
+      {error && (
+        <Box color="red.500" mt={2}>
+          {error}
+        </Box>
+      )}
 
       <Button type="submit">Edit Event</Button>
     </Box>
